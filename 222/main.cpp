@@ -8,6 +8,7 @@
 #include <map>
 //#include "func.h"
 #include"xVector.h"
+#include "yVector.h"
 //Лабораторная работа №2
 //
 //initializer_list, move, default, delete, move итераторы
@@ -98,6 +99,54 @@ int main()
 	xVint.xsort(xVector<int>::sortMetod::down);// по убыванию
 	PrintAnyCont(xVint);	cout << "\n";
 	xVint.xsort(xVector<int>::sortMetod::abs); // по модулю
-	PrintAnyCont(xVint);	cout << "\n";
+	PrintAnyCont(xVint);	cout << "\n\n";
+
+	vector<int> v;
+	copy(xVint.begin(), xVint.end(), back_inserter(v));// копируем в вектор
+	PrintAnyCont(v);	cout << "\n--------------------";
+
+
+	
+//	--------------------------------------------------------------------
+		cout << "\n";
+	interval_y<int> = { 1,20 }; //можно так интервал задать
+	yVector<double>::setInterval(1, 20); // а можно так
+	yVector<double> yVdouble{ 2,-1,3,33, 5,2 };
+	yVector<int> yVint{ 14,-1,3,33, 15,2 };
+	yVector<int> yVint2;
+	yVint2.add({ 12,-10,19,303, 5,15 });
+
+	PrintAnyCont(yVint);	cout << "\n";
+	////PrintAnyCont(list<double>{4,8,2.2});
+	yVint.add({ 5,6,0 }); //можно списком добавлять
+	yVint.add(yVint2); // можно с другого вектора
+	yVint.add(7); // а можно по 1 элементу
+	PrintAnyCont(yVint);	cout << "\n\n";
+
+	yVint.del(7); //Можно по 1 убирать
+	yVint.del({ 51,6,0 });// можно по кучке
+	yVint = yVint - yVint2; // а можно и так
+	PrintAnyCont(yVint);	cout << "\n";
+
+	yVint = yVint + yVint2;// так тоже можно добавлять
+	PrintAnyCont(yVint);	cout << "\n";
+	yVint.resetInterval(1, 10);// уменьшаем интевал с выкидыванием лишнего
+	PrintAnyCont(yVint);	cout << "\n";
+
+	interval_y<int> = { -20,30 };
+	yVint.add({ -5,-6,-12,7,-3,10 });// накидаем значений, подготовливаем к сортировке
+	PrintAnyCont(yVint);	cout << "\n\n";
+	yVint.xsort(yVector<int>::sortMetod::up); // по возрастанию
+	PrintAnyCont(yVint);	cout << "\n";
+	yVint.xsort(yVector<int>::sortMetod::down);// по убыванию
+	PrintAnyCont(yVint);	cout << "\n";
+	yVint.xsort(yVector<int>::sortMetod::abs); // по модулю
+	PrintAnyCont(yVint);	cout << "\n\n";
+
+	vector<int> vy;
+	copy(yVint.begin(), yVint.end(), back_inserter(v));// копируем в вектор
+	PrintAnyCont(vy);	cout << "\n";
+
+
 return(0);
 }

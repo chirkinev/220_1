@@ -22,8 +22,14 @@ class xVector {
 	vector<T> cont;
 public:
 	enum class sortMetod { up, down, abs };
+
 	xVector() =default;
+	xVector(const xVector<T>&) = default;
+	xVector(xVector<T>&&) = default;
+	xVector& operator= (const xVector&) = default;
+	xVector& operator= (xVector&&) = default;
 	bool operator== (const xVector&)const = default;// cpp 20
+	~xVector() = default;
 
 	xVector(const T& node){	this->add(node); }
 	xVector(std::initializer_list<T> il)
