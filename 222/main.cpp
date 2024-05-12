@@ -9,6 +9,10 @@
 //#include "func.h"
 #include"xVector.h"
 #include "yVector.h"
+#include "MyString.h"
+#include "MyUniquePTR.h"
+
+using namespace std;
 //Ћабораторна€ работа є2
 //
 //initializer_list, move, default, delete, move итераторы
@@ -43,27 +47,9 @@
 //vector<int> v;
 //std::copy(my.begin(), my.end(), Е);
 //
-//«адание 2. –еализуйте шаблон класса MyUniquePTR, который €вл€етс€ 
-// оберткой дл€ указател€ на объект любого типа.
-//«адача Ц класс должен обеспечивать единоличное владение динамически
-//  создаваемым объектом.ѕроверить функционирование шаблона на примере MyString :
-//{
-//	MyUniquePTR<MyString> p1(new MyString(УabcФ));
-//	std::cout << p1->GetString();
-//	p1->SetNewString(УqwertyФ);
-//	MyString  s2 = *p1;
-//	//MyUniquePTR< MyString > p2=p1; //здесь компил€тор должен выдавать ошибку => 
-//	»справьте!
-//		If(p1) { std::cout << ФNo object!Ф } //а это должно работать
-//	MyUniquePTR< MyString > p3(new MyString(УvvvФ));
-//	//p3 = p2; //и здесь компил€тор должен выдавать ошибку
-//	vector< MyUniquePTR< MyString >> v; //как проинициализировать???
-//	list< MyUniquePTR< MyString >> l;
-//	//как скопировать из v в l ???
-//}
-//
-using namespace std;
+
 int main()
+{
 {
 	cout << "\n";
 	interval<int> = { 1,20 }; //можно так интервал задать
@@ -71,7 +57,7 @@ int main()
 	xVector<double> xVdouble{ 2,-1,3,33, 5,2 };
 	xVector<int> xVint{ 14,-1,3,33, 15,2 };
 	xVector<int> xVint2;
-		xVint2.add({ 12,-10,19,303, 5,15 });
+	xVint2.add({ 12,-10,19,303, 5,15 });
 
 	PrintAnyCont(xVint);	cout << "\n";
 	PrintAnyCont(xVdouble);	cout << "\n\n";
@@ -83,7 +69,7 @@ int main()
 
 	xVint.del(7); //ћожно по 1 убирать
 	xVint.del({ 51,6,0 });// можно по кучке
-	xVint=xVint-xVint2; // а можно и так
+	xVint = xVint - xVint2; // а можно и так
 	PrintAnyCont(xVint);	cout << "\n";
 
 	xVint = xVint + xVint2;// так тоже можно добавл€ть
@@ -106,9 +92,9 @@ int main()
 	PrintAnyCont(v);	cout << "\n--------------------";
 
 
-	
-//	--------------------------------------------------------------------
-		cout << "\n";
+
+	//	--------------------------------------------------------------------
+	cout << "\n";
 	interval_y<int> = { 1,20 }; //можно так интервал задать
 	yVector<double>::setInterval(1, 20); // а можно так
 	yVector<double> yVdouble{ 2,-1,3,33, 5,2 };
@@ -147,6 +133,62 @@ int main()
 	copy(yVint.begin(), yVint.end(), back_inserter(v));// копируем в вектор
 	PrintAnyCont(vy);	cout << "\n";
 
+}
+
+//«адание 2. –еализуйте шаблон класса MyUniquePTR, который €вл€етс€ 
+// оберткой дл€ указател€ на объект любого типа.
+//«адача Ц класс должен обеспечивать единоличное владение динамически
+//  создаваемым объектом.ѕроверить функционирование шаблона на примере MyString :
+
+//
+
+	{
+		
+		MyUniquePTR<MyString> p1(new MyString("abc"));
+		std::cout << p1->GetString()<<"\n";
+		p1->SetNewString("qwerty");
+		MyString  s2 = *p1;
+		//MyUniquePTR< MyString > p2=p1; //здесь компил€тор должен выдавать ошибку => 
+
+		//error C2280: "MyUniquePTR<MyString>::MyUniquePTR(const MyUniquePTR<MyString> &)": 
+		// предприн€та попытка ссылки на удаленную функцию
+				 
+        //»справьте! - ок
+
+		MyUniquePTR< MyString > p2 = std::move(p1);
+
+		std::cout << p2->GetString() << "\n";
+		std::cout << p1->GetString() << "\n";
+		
+		if (!p1) { 	std::cout << "No object!\n"; }; //а это должно работать
+
+		MyUniquePTR< MyString > p3(new MyString("vvv"));
+
+		//p3 = p2; //и здесь компил€тор должен выдавать ошибку
+		
+		vector< MyUniquePTR< MyString >> v;
+         //как проинициализировать??? 
+		 // так или из простого массива как описано ниже
+		// списком не получаетс€ даже std::move не помогает
+		// хочет конструктор копировани€
+
+		v.emplace_back(MyUniquePTR<MyString>(new MyString("1a1bc")));
+		v.emplace_back(MyUniquePTR<MyString>(new MyString("2a2bc")));
+		v.emplace_back(MyUniquePTR<MyString>(new MyString("3a3bc")));
+		
+		for(auto& n:v)cout << n->GetString() << "\n";		cout << "\n";
+
+		////как скопировать из v в l ???	 
+		list< MyUniquePTR< MyString >> l(make_move_iterator(v.begin()), 
+										make_move_iterator(v.end()));
+
+		for (auto& n : l)cout << n->GetString() << "\n";
+		cout << "\n";
+		for (auto& n : v)cout << n->GetString() << "\n";
+		
+
+
+	}
 
 return(0);
 }

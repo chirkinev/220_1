@@ -9,7 +9,6 @@ using namespace std;
 template<typename T>
 void  PrintAnyCont(const T& l)
 {
-	//auto d = l.cend();
 	for ( auto i = l.cbegin(); i != l.cend(); ++i)
 		cout << *i << " ; ";
 };
@@ -52,18 +51,18 @@ public:
 
 	void del(const T& node) 
 	{
-			auto it = find(cont.begin(), cont.end(), node);
-			if (it != cont.end()) {
-				for (; (it+1) != cont.end(); ++it) *it = *(it + 1);
-				cont.pop_back();
-			}
+		auto it = find(cont.begin(), cont.end(), node);
+		if (it != cont.end()) {
+			for (; (it+1) != cont.end(); ++it) *it = *(it + 1);
+			cont.pop_back();
+		}
 	}
 	
 	void del(std::initializer_list<T> il)
 		{for (auto& node : il) this->del(node);}
 
 	xVector& operator-(const xVector& l2) 
-		{//xVector tmp{ *this };
+		{
 		for (auto i = l2.cbegin(); i != l2.cend(); ++i) 
 			this->del(*i);
 		return *this;
@@ -82,8 +81,9 @@ public:
 				if (*i<ibeg || *i>iend) 
 				{
 				for (auto it = i; (it + 1) != ie; ) 
-					{   *it = *(it + 1);
-						++it;
+					{   
+					*it = *(it + 1);
+					++it;
 					}
 				--ie;
 				counter++;
