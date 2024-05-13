@@ -287,25 +287,25 @@ int main()
 			try {
 				c1 = stringToEnum<Col2>("blue");
 			}
-			catch (string err)
+			catch (std::exception err)
 			{
-				cout << "\n" << err << "\n\n";
+				cout << "\n" << err.what() << "\n\n";
 			}
 			
 			try {
 				c2 = stringToEnum<Col2>("red");
 			}
-			catch (string err)
+			catch (std::exception err)
 			{
-				cout << "\n" << err << "\n\n";
+				cout << "\n" << err.what() << "\n\n";
 			}
 
 			try {
 				c3 = stringToEnum<Col2>("purple");
 			}
-			catch (string err)
+			catch (std::exception err)
 			{
-				cout << "\n"<<err<<"\n\n";
+				cout << "\n"<<err.what()<<"\n\n";
 			}
 
 			auto Str = enumToString(c1);

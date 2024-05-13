@@ -52,15 +52,16 @@ int main()
 {
 {
 	cout << "\n";
-	interval<int> = { 1,20 }; //можно так интервал задать
-	xVector<double>::setInterval(1, 20); // а можно так
-	xVector<double> xVdouble{ 2,-1,3,33, 5,2 };
-	xVector<int> xVint{ 14,-1,3,33, 15,2 };
-	xVector<int> xVint2;
+	//xVector<int>::setInterval(1, 20); //можно так интервал задать
+	//xVector<double>::setInterval(1, 20); // а можно так
+	xVector<double> xVdouble{ 1,20,2,-1,3,33, 5,2 };//первые 2 это интервал
+	xVector<int> xVint{ 1,20,14,-1,3,33, 15,2 };
+	xVector<int> xVint2(1,20);
+
 	xVint2.add({ 12,-10,19,303, 5,15 });
 
 	PrintAnyCont(xVint);	cout << "\n";
-	PrintAnyCont(xVdouble);	cout << "\n\n";
+	//PrintAnyCont(xVdouble);	cout << "\n\n";
 	//PrintAnyCont(list<double>{4,8,2.2});
 	xVint.add({ 5,6,0 }); //можно списком добавлять
 	xVint.add(xVint2); // можно с другого вектора
@@ -76,15 +77,19 @@ int main()
 	PrintAnyCont(xVint);	cout << "\n";
 	xVint.resetInterval(1, 10);// уменьшаем интевал с выкидыванием лишнего
 	PrintAnyCont(xVint);	cout << "\n";
-
-	interval<int> = { -20,30 };
+	xVint.resetInterval(-20, 30);
+	xVint2.resetInterval(-20, 30);
+	//interval<int> = { -20,30 };
 	xVint.add({ -5,-6,-12,7,-3,10 });// накидаем значений, подготовливаем к сортировке
 	PrintAnyCont(xVint);	cout << "\n\n";
-	xVint.xsort(xVector<int>::sortMetod::up); // по возрастанию
+	//xVint.xsort(xVector<int>::sortMetod::up); // по возрастанию
+	xVint.x2sort([](const auto a ,const auto b) {return a < b; });
 	PrintAnyCont(xVint);	cout << "\n";
-	xVint.xsort(xVector<int>::sortMetod::down);// по убыванию
+	//xVint.xsort(xVector<int>::sortMetod::down);// по убыванию
+	xVint.x2sort([](const auto a, const auto b) {return a > b; });
 	PrintAnyCont(xVint);	cout << "\n";
-	xVint.xsort(xVector<int>::sortMetod::abs); // по модулю
+	//xVint.xsort(xVector<int>::sortMetod::abs); // по модулю
+	xVint.x2sort([](const auto a, const auto b) {return abs(a) < abs(b); });
 	PrintAnyCont(xVint);	cout << "\n\n";
 
 	vector<int> v;
@@ -123,6 +128,7 @@ int main()
 	yVint.add({ -5,-6,-12,7,-3,10 });// накидаем значений, подготовливаем к сортировке
 	PrintAnyCont(yVint);	cout << "\n\n";
 	yVint.xsort(yVector<int>::sortMetod::up); // по возрастанию
+	
 	PrintAnyCont(yVint);	cout << "\n";
 	yVint.xsort(yVector<int>::sortMetod::down);// по убыванию
 	PrintAnyCont(yVint);	cout << "\n";

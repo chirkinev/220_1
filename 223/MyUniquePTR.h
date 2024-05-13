@@ -10,10 +10,10 @@ public:
 
 	MyUniquePTR<T>& operator=(const MyUniquePTR<T>&) = delete;
 
-	/*MyUniquePTR<T>(MyUniquePTR<T>& in) {
+	MyUniquePTR<T>(MyUniquePTR<T>& in) {
 		pointer = in.pointer;
 		in.pointer = 0;
-	}*/
+	}
 
 	MyUniquePTR<T> (MyUniquePTR<T>&& in) noexcept {
 		pointer = in.pointer;
@@ -21,29 +21,23 @@ public:
 	}
 		
 	~MyUniquePTR() noexcept {
-		delete pointer;
+		delete[] pointer;
 		//pointer = nullptr;
 	}
 	
-	operator const T*() const noexcept 
+	 operator const T*() const noexcept 
 	 { return pointer; }
-		
-	T* operator->() noexcept {
-		return this->pointer;
-	}
-	const T* operator->() const noexcept {
+
+	T* operator->() const  noexcept {
 		return this->pointer;
 	}
 
-	const T& operator*() const  noexcept {
-		return *(this->pointer);
-	}
-	 T& operator*()   noexcept {
+	T& operator*() const  noexcept {
 		return *(this->pointer);
 	}
 	
 	MyUniquePTR<T>& operator=( MyUniquePTR<T>&& in) noexcept {
-		delete pointer;
+		delete[] pointer;
 		pointer = in.pointer;
 		in.pointer = nullptr;
 		return *this;

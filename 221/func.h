@@ -86,18 +86,23 @@ map<string,Col2> m1<Col2> =
 };
 template<typename T>
 const T stringToEnum(const string& s) {
-	const auto it = m1<T>.find(s);
+	/*const auto it = m1<T>.find(s);
 	if (it == m1<T>.end()) throw string("not found " + s);
 
-	return (*it).second;
+	return (*it).second;*/
+	return m1<T>.at(s);
 }
 template<typename T>
-const string enumToString(const T& l) {
+const string enumToString(const T l) {
+
+	/*const auto it = find( m1<T>.cbegin(), m1<T>.cend(), l)
+		
+	return (it == cend(m1<T>))? "unknown color":(*it).first;*/
 
 	const auto it = find_if(cbegin(m1<T>), cend(m1<T>), [&l](const auto& test)
-		{return (test.second == l) ? true : false;	});
-	return (it == cend(m1<T>))? "unknown color":(*it).first;
+		{return (test.second == l) /*? true : false*/;	});
 
+	return (it == cend(m1<T>)) ? "unknown color" : (*it).first;
 
 }
 
