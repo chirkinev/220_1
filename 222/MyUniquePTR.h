@@ -1,10 +1,10 @@
 #pragma once
 template<typename T>
 class MyUniquePTR  {
-public:
 	T* pointer;
+public:
 	MyUniquePTR():pointer(nullptr) {};
-	MyUniquePTR(T* in) :pointer(in) {};
+	MyUniquePTR(T* in) :pointer(in)  {};
 	
 	MyUniquePTR<T> ( const MyUniquePTR<T>& in) = delete;
 
@@ -24,22 +24,19 @@ public:
 		delete pointer;
 		//pointer = nullptr;
 	}
-	bool operator==(MyUniquePTR<T>&& in) {
-		return in - this;
-	}
-	operator T*() const { return pointer; }
+	
+	 operator const T*() const noexcept 
+	 { return pointer; }
 
-	T* operator->() const  {
+	T* operator->() const  noexcept {
 		return this->pointer;
 	}
 
-	T& operator*() const  {
+	T& operator*() const  noexcept {
 		return *(this->pointer);
 	}
 	
-	
-
-	MyUniquePTR<T>& operator=( MyUniquePTR<T>&& in) {
+	MyUniquePTR<T>& operator=( MyUniquePTR<T>&& in) noexcept {
 		delete pointer;
 		pointer = in.pointer;
 		in.pointer = nullptr;
