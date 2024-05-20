@@ -50,6 +50,7 @@ using namespace std;
 
 int main()
 {
+
 {
 	cout << "\n";
 	//xVector<int>::setInterval(1, 20); //можно так интервал задать

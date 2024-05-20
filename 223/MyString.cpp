@@ -4,6 +4,7 @@
 #include <string>
 #include "myString.h"
 #include <cstdarg>
+#include<ostream>
 //using namespace std;
 const char* MyString::err = "UB EMPTY STRING- nullptr string";
 // Определение конструктора.
@@ -77,6 +78,11 @@ void MyString::AddStr(const char* newstr)
         m_pStr = tmp;
     }
 }
+std::ostream& operator<<(std::ostream& os, const MyString& s)
+{
+    os << s.GetString();
+    return os;
+}
 void UniStr(MyString& dist, int c, MyString* a, ...)
 {
 
@@ -87,4 +93,16 @@ void UniStr(MyString& dist, int c, MyString* a, ...)
         dist.AddStr((*p)->GetString());
         p += 1;//sizeof(MyString);
     }
+}
+MyString& MyString::operator=(const MyString& in) {
+    delete[] m_pStr;
+    m_pStr = new char[strlen(in.m_pStr) + 1];
+    std::strcpy(m_pStr, in.m_pStr);
+    return *this;
+}
+MyString& MyString::operator=(MyString&& in) noexcept {
+    auto tmp = m_pStr;
+    m_pStr = in.m_pStr;
+    in.m_pStr = tmp;
+    return *this;
 }
