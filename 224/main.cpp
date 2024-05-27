@@ -35,16 +35,16 @@ int main()
 
 	
 	{	//Например:
-		int ar[factorial(3)]; std::cout <<ar<< "\n";
+		int ar[factorial(3)]; 
 
 		//или
 		constexpr auto n = factorial(5);
-		int ar1[n];  std::cout << ar1 << "\n";
+		int ar1[n];  
 
 		//попробуйте:
 		int m = 7;
 		//constexpr int n1 = factorial(m); //не вычслить во время компиляции!!!
-		//int ar1[n1];
+		//int ar1[n1];						// только если const int m = 7;
 
 		//а так?
 		auto n2 = factorial(m); //не вычслить во время компиляции!!!
@@ -134,20 +134,35 @@ int main()
 		std::vector<int> vi{ 1,2,3 };
 		std::list<int> li{ 3,4,5 };
 		std::deque<int> di{ 6,7,8 };
-		std::set<int> si{ 10,12,11 };
+		std::set<int> si{ 1,2,3 };
 		int mi[] = { 9,8,7,6 };
 
+		std::vector<int*> vpi; for (int& a : vi)vpi.push_back(&a);
+		std::list<int*> lpi; for (int& a : li)lpi.push_back(&a);
+		std::deque<int*> dpi; for (int& a : di)dpi.push_back(&a);
+		std::set<int*> spi; for (int& a : vi)spi.insert(&a);
+		int* mpi[] = { &mi[0],&mi[1],&mi[2],&mi[3] };
+
+
+		std::cout << "\n-------printT---------\n";
 		printT(vi); std::cout << "\n";
 		printT(li); std::cout << "\n";
 		printT(di); std::cout << "\n";
 		printT(si); std::cout << "\n";
-		printT(mi); std::cout << "\n\n";
+		printT(mi); std::cout << "\n";
+		std::cout << "\n--------printT*--------\n";
+		printT(vpi); std::cout << "\n";
+		printT(lpi); std::cout << "\n";
+		printT(dpi); std::cout << "\n";
+		printT(spi); std::cout << "\n";
+		printT(mpi); std::cout << "\n\n";
 
-		printT(&vi); std::cout << "\n";
+
+		/*printT(&vi); std::cout << "\n";
 		printT(&li); std::cout << "\n";
 		printT(&di); std::cout << "\n";
 		printT(&si); std::cout << "\n";
-		printT(&mi); std::cout << "\n\n";
+		printT(&mi); std::cout << "\n\n";*/
 	}
 
 	/***************************************************************/
@@ -172,7 +187,7 @@ int main()
 	/* 	Реализуйте шаблон функции вывода на печать значений элементов любого 
 	адаптера (stack, queue, priority_queue)
 	Подсказки: if constexpr, is_same
-	Предусмотрите вывод значений, если в адаптере хранятся указатели.
+	//Предусмотрите вывод значений, если в адаптере хранятся указатели.
 	*/
 	{
 		std::deque<int> d1{ 1,2,3 };
@@ -183,15 +198,18 @@ int main()
 		std::queue<int> qi{ d2 };
 		std::priority_queue<int> pqi{ std::less<int>(),v3 };
 
+		std::stack<int*> spi; for (int& a : d1)spi.push(&a);
+		std::queue<int*> qpi; for (int& a : d2)qpi.push(&a);
+		std::priority_queue<int*> pqpi; for (int& a : v3)pqpi.push(&a);
 
 		std::cout << "\n-----------------------------\n";
 		printAdaptor(si); std::cout << "\n";
 		printAdaptor(qi); std::cout << "\n";
 		printAdaptor(pqi); std::cout << "\n-----------------------------\n"; 
 		
-		printAdaptor(&si); std::cout << "\n";
-		printAdaptor(&qi); std::cout << "\n";
-		printAdaptor(&pqi); std::cout << "\n";
+		printAdaptor(spi); std::cout << "\n";
+		printAdaptor(qpi); std::cout << "\n";
+		printAdaptor(pqpi); std::cout << "\n";
 
 
 	}

@@ -1,6 +1,6 @@
 #include "Header.h"
 
-unsigned long long/*size_t*/ operator""_b(const char* dec) {
+size_t operator""_b(const char* dec) {
     unsigned long long tmp{};
     for (size_t i = 0; i < strlen(dec); i++) 
         tmp = tmp * 2 + (dec[i] - '0');
