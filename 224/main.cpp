@@ -4,8 +4,15 @@
 #include <algorithm>
 #include <iterator>
 #include <memory>
+#include "Header.h"
+#include <vector>
+#include <list>
+#include <deque>
+#include <set>
+#include <queue>
+#include <stack>
 
-using namespace std;
+//using namespace std;
 
 int main()
 {
@@ -26,20 +33,22 @@ int main()
 	//				Для проверки достаточно создать встроенный массив с размерностью, вычисляемой
 	//				посредством constexpr-функции:
 
+	
 	{	//Например:
-		//int ar[factorial(3)];
+		int ar[factorial(3)]; std::cout <<ar<< "\n";
 
 		//или
-		//constexpr int n = factorial(5);
-		//int ar1[n];
+		constexpr auto n = factorial(5);
+		int ar1[n];  std::cout << ar1 << "\n";
 
 		//попробуйте:
-		//int m = 7;
-		//constexpr int n1 = factorial(m);
+		int m = 7;
+		//constexpr int n1 = factorial(m); //не вычслить во время компиляции!!!
 		//int ar1[n1];
 
 		//а так?
-		//int n2 = factorial(m);
+		auto n2 = factorial(m); //не вычслить во время компиляции!!!
+		//int ar1[n2];
 		__asm nop
 	}
 
@@ -59,7 +68,13 @@ int main()
 	//		  компилятор вычислит результат вызова рекурсивной функции на этапе компиляции)
 
 	{
+		/*constexpr*/ auto a = 100000000_b;
+		/*constexpr*/ auto b = 0_b;
+		
+		constexpr auto c = 100000000_b2;
+		constexpr auto d = 0_b2;
 
+		
 		__asm nop
 
 	}
@@ -72,7 +87,10 @@ int main()
 	//Подсказка: количество разрядов в байте определяет константа CHAR_BIT - <cstdint>
 
 	{
-		//std::string sBin= 256_toBinStr;
+		std::string sBin= 256_toBinStr;
+		std::string sBin1 = 0_toBinStr;
+		std::string sBin2 = 2_toBinStr;
+		std::string sBin3 = 63_toBinStr;
 		__asm nop
 	}
 
@@ -93,49 +111,106 @@ int main()
 
 	{
 
+		constexpr int a = mmx(1, 2).getMax(); // 2
+		constexpr int a1 = mmx(1, 8).getMin(); // 1
+		constexpr bool a2 = mmx(1, 3).isIn(2); // true
+		constexpr int a3 = mmx(1, 2).inInD(5); // 2
+
+
+
 		__asm nop
 	}
 	/***************************************************************/
 //Задание 4.
 	/*
-	Реализуйте шаблон функции для печати любых последовательностей (vector, list, deque, set и встроенного массива), которые могут содержать:
+	Реализуйте шаблон функции для печати любых последовательностей 
+	(vector, list, deque, set и встроенного массива), которые могут содержать:
 	•	как объекты любого типа,
-	•	так и указатели на объекты любого типа (указатели распечатывать неинтересно => в этом случае следует получать значение по адресу)
+	•	так и указатели на объекты любого типа 
+	(указатели распечатывать неинтересно => в этом случае следует получать значение по адресу)
 	Подсказки: if constexpr
 	*/
 	{
+		std::vector<int> vi{ 1,2,3 };
+		std::list<int> li{ 3,4,5 };
+		std::deque<int> di{ 6,7,8 };
+		std::set<int> si{ 10,12,11 };
+		int mi[] = { 9,8,7,6 };
 
+		printT(vi); std::cout << "\n";
+		printT(li); std::cout << "\n";
+		printT(di); std::cout << "\n";
+		printT(si); std::cout << "\n";
+		printT(mi); std::cout << "\n\n";
+
+		printT(&vi); std::cout << "\n";
+		printT(&li); std::cout << "\n";
+		printT(&di); std::cout << "\n";
+		printT(&si); std::cout << "\n";
+		printT(&mi); std::cout << "\n\n";
 	}
 
 	/***************************************************************/
 	//Задание 5.
 		/* Реализуйте шаблон функции сложения двух значений.
-		Если первое слагаемое является вектором, то все элементы вектора нужно увеличить на значение второго параметра. При этом элементы вектора и второй параметр должны быть одного и того же типа.
+		Если первое слагаемое является вектором, то все элементы вектора 
+		нужно увеличить на значение второго параметра. 
+		При этом элементы вектора и второй параметр должны быть одного и того же типа.
 		Подсказки: if constexpr, is_same
 		*/
 	{
-
+		auto a = sum(3, 3);
+		std::cout << a<<"\n";
+		
+		auto b = sum(std::vector<double>{2, 2.2, 3}, 1.1);
+		printT(b);
 	}
 
 
 	/***************************************************************/
 //Задание 6.
-	/* 	Реализуйте шаблон функции вывода на печать значений элементов любого адаптера (stack, queue, priority_queue)
+	/* 	Реализуйте шаблон функции вывода на печать значений элементов любого 
+	адаптера (stack, queue, priority_queue)
 	Подсказки: if constexpr, is_same
 	Предусмотрите вывод значений, если в адаптере хранятся указатели.
 	*/
 	{
+		std::deque<int> d1{ 1,2,3 };
+		std::deque<int> d2{ 4,5,6 };
+		std::vector<int> v3{ 7,8,9 };
+
+		std::stack<int> si{ d1};
+		std::queue<int> qi{ d2 };
+		std::priority_queue<int> pqi{ std::less<int>(),v3 };
+
+
+		std::cout << "\n-----------------------------\n";
+		printAdaptor(si); std::cout << "\n";
+		printAdaptor(qi); std::cout << "\n";
+		printAdaptor(pqi); std::cout << "\n-----------------------------\n"; 
+		
+		printAdaptor(&si); std::cout << "\n";
+		printAdaptor(&qi); std::cout << "\n";
+		printAdaptor(&pqi); std::cout << "\n";
+
 
 	}
 
 	/***************************************************************/
 //Задание 7.
-	/* 	Реализуйте шаблон constexpr функции Smth(), которая должна возвращать значения разного типа
+	/* 	Реализуйте шаблон constexpr функции Smth(), которая должна возвращать
+	значения разного типа
 	Подсказки: constexpr, if constexpr
 	*/
 	//constexpr int res1 = /*<вызов Smth()>;*/ //res1 = 1
 	//constexpr double res2 = /*<вызов Smth()>; */ //res2 = 2.2
 	//  /*constexpr???*/ std::string res3 = /*<вызов Smth()>; */ //res3 = "abc"
+
+	constexpr int res1 = Smth(1);//res1 = 1
+	constexpr double res2 = Smth(2.2);//res2 = 2.2
+	/*constexpr*/  std::string res3 = Smth("abc");//res3 = "abc"
+
+	//std::string не может быть constexpr
 
 
 	//***************************************************************/
@@ -147,7 +222,8 @@ int main()
 		/*
 		template<typename T, size_t size> class MyArray
 			{
-				T ar[size]; //как обеспечить инициализацию элементов базового типа по умолчанию нулем?
+				T ar[size]; //как обеспечить инициализацию элементов 
+				базового типа по умолчанию нулем?
 				…
 				public:
 				MyArray(const T*[, возможно другие параметры]);
@@ -156,19 +232,20 @@ int main()
 			};
 
 		*/
-		/*
+		
 		//Требуется обеспечить работоспособность приведенных примеров использования.
-			{
-				MyArray<int, 5> ar1;//MyArray<int,5>
-MyArray<char, 5> ar2{"ABCqwerty"};//MyArray<char,5>
+	{
+		MyArray<int, 5> ar1;//MyArray<int,5>
+		MyArray<char, 5> ar2{"ABCqwerty"};//MyArray<char,5>
 
-				MyArray ar3{"ABC"}; //MyArray<char,4>
+		MyArray ar3{"ABC"}; //MyArray<char,4>
 
-int ar[] = { 1,2,3 };
-				MyArray ar4{ ar };
+		int ar[] = { 1,2,3 };
+		MyArray ar4{ ar };
 
-			}
-		*/
+		int r = 0;//прорсто точка останова
+	}
+		
 
 
 }
