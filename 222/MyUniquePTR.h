@@ -10,11 +10,6 @@ public:
 
 	MyUniquePTR<T>& operator=(const MyUniquePTR<T>&) = delete;
 
-	/*MyUniquePTR<T>(MyUniquePTR<T>& in) {
-		pointer = in.pointer;
-		in.pointer = 0;
-	}*/
-
 	MyUniquePTR<T> (MyUniquePTR<T>&& in) noexcept {
 		pointer = in.pointer;
 		in.pointer = 0;

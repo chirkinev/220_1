@@ -194,7 +194,7 @@ int main()
 		std::deque<int> d2{ 4,5,6 };
 		std::vector<int> v3{ 7,8,9 };
 
-		std::stack<int> si{ d1};
+		std::stack<int,std::vector<int>> si{ v3};
 		std::queue<int> qi{ d2 };
 		std::priority_queue<int> pqi{ std::less<int>(),v3 };
 
@@ -202,10 +202,10 @@ int main()
 		std::queue<int*> qpi; for (int& a : d2)qpi.push(&a);
 		std::priority_queue<int*> pqpi; for (int& a : v3)pqpi.push(&a);
 
-		std::cout << "\n-----------------------------\n";
+		std::cout << "\n-----------printAdaptor------------------\n";
 		printAdaptor(si); std::cout << "\n";
 		printAdaptor(qi); std::cout << "\n";
-		printAdaptor(pqi); std::cout << "\n-----------------------------\n"; 
+		printAdaptor(pqi); std::cout << "\n-----------printAdaptor*------------------\n"; 
 		
 		printAdaptor(spi); std::cout << "\n";
 		printAdaptor(qpi); std::cout << "\n";

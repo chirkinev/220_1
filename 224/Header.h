@@ -162,7 +162,7 @@ auto sum(const T& in1, const T2& in2)
 
 template<typename T>
 const auto& get(const T& c) {
-    if constexpr (std::is_same<std::stack<typename T::value_type>, T >::value ||
+    if constexpr (std::is_same<std::stack<typename T::value_type,typename T::container_type>, T >::value ||
                std::is_same<std::priority_queue<typename T::value_type>, T >::value)
         if constexpr (std::is_pointer<typename T::value_type>::value)
         return *c.top();

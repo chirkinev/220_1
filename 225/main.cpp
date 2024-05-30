@@ -4,6 +4,8 @@
 #include <set>
 #include <algorithm>
 #include <string>
+#include <list>
+#include <fstream>
 
 
 
@@ -41,7 +43,9 @@ int main()
 			v.push_back(std::unique_ptr<std::string>(new std::string("aa")));
 			v.push_back(std::unique_ptr<std::string>(new std::string("bb")));
 			v.push_back(std::make_unique<std::string>(std::string("cc")));
-			
+			v.emplace_back(new std::string("bb88"));
+
+
 			//Распечатайте все строки
 			for (auto it = v.cbegin(); it != v.cend();++it)
 				std::cout << **it << " ; ";
@@ -114,17 +118,19 @@ int main()
 				new std::string("bb"), 
 				new std::string("cc") };
 
-			auto destroerA = [](std::string** b)mutable { 
-				
-				for (size_t i = 0; i < ; i++)
-				{
-
-				}
-				
+			auto destroerA = [s= size(arStrPtr) ](std::string** b) {
+				for (int i = 0; i < /*std::size(b)*//*sizeof(b) / sizeof(b[0])*/s; i++)
+					// как размер получить?
+					{
+						delete b[i];
+						b[i] = 0;
+						
+					}
 				};
 
-			std::unique_ptr<std::string*, decltype(destroerA)> ups{ arStrPtr,destroerA };
-
+			std::unique_ptr<std::string*[], decltype(destroerA)> ups{ arStrPtr,destroerA };
+			for (int i = 0; i < size(arStrPtr); i++)
+				std::cout << *ups[i];
 			__asm nop
 		}
 
@@ -132,6 +138,16 @@ int main()
 			//Посредством алгоритма copy() скопируйте элементы вектора в пустой список с элементами 
 			//того же типа
 			//Подсказка: перемещающие итераторы и шаблон std::make_move_iterator
+			std::vector<std::unique_ptr<std::string>> v;
+			v.push_back(std::unique_ptr<std::string>(new std::string("aa")));
+			v.push_back(std::unique_ptr<std::string>(new std::string("bb")));//так
+			v.push_back(std::make_unique<std::string>(std::string("cc")));//  и так
+
+			std::list<std::unique_ptr<std::string>> lv(v.size());
+
+			std::copy(std::make_move_iterator(v.begin()),
+				      std::make_move_iterator(v.end()),
+				      lv.begin());
 
 			__asm nop
 
@@ -152,9 +168,9 @@ int main()
 	//в. Последний владелец указателя должен закрыть файл
 
 	//Подсказка: имитировать порядок записи можно с помощью функции rand()
-	/*
+	
 	{
-
+		//std::shared_ptr<FILE, decltype(&fclose)> file (fopen("test.txt", "w"), &fclose);
 	//"писатели":
 	//Создать writer1, writer2
 
@@ -168,14 +184,16 @@ int main()
 	__asm nop
 	}//закрытие файла???
 
-	*/
+	
 	/***************************************************************/
 	//Задание 3.
 	{
 		//Дан массив элементов типа string
 		std::string strings[] = { "abc", "123", "qwerty", "#$%" };
 		//До завершения фрагмента строки должны существовать в единственном экземпляре.
-		//Требуется обеспечить манипулирование строками а) без копирования и б) без изменения порядка
+		//Требуется обеспечить манипулирование строками 
+		// а) без копирования и 
+		// б) без изменения порядка
 		//элементов в массиве!
 
 		//В std::set "складываем" по алфавиту обертки для строк, которые содержат только буквы 
@@ -191,7 +209,8 @@ int main()
 		//std::vector<std::shared_ptr < std::string>>
 
 		/******************************************************************************************/
-		//сюда "складываем" обертки для строк, которые не содержат ни символов букв, ни символов цифр
+		//сюда "складываем" обертки для строк, которые не содержат ни символов букв, 
+		// ни символов цифр
 		//и просто выводим
 
 
