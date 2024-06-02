@@ -1,0 +1,10 @@
+0 writer1
+1 writer2
+2 writer1
+3 writer2
+4 writer2
+5 writer1
+6 writer1
+7 writer2
+8 writer2
+9 writer2
