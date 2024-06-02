@@ -332,8 +332,8 @@ int main()
 	sptr_h mom_s=(human::child("Kesa", human::sex::female,g_mom2, g_dad2));//родили они 2х дочерей
 	sptr_h mom=( human::child("Lilim", human::sex::female, g_mom2, g_dad2));
 
-	(*g_dad1).is_dead();
-	(*dad).is_dead();
+	(*g_dad1).is_dead();// Адам переел фруктов
+	(*dad).is_dead();// Каин убил Авеля
 
 	sptr_h doth = (human::child("Masha", human::sex::female, mom, dad)); // и внучку
 

@@ -64,31 +64,6 @@ public:
 	void is_dead() { alive = false; };// умер
 
 	void print_h();
-	void print_g() {
-
-		this->print_h();
-		std::cout << "--------------\n";
-
-		if (children.size() == 0)std::cout << "no children\n";
-		else {
-			std::cout << this->name << "`s children:\n";
-			for (std::weak_ptr<human>& ch : children) {
-				auto chh = ch.lock();
-				chh->print_h();
-			}
-		};
-		std::cout << "--------------\n";
-		if ((this->mother) == nullptr)std::cout << this->name << "`s mother unnown\n";
-		else {
-			std::cout << this->name << "`s mother:\n";
-			mother->print_g();
-		};
-		std::cout << "--------------\n";
-		if ((this->father) == nullptr)std::cout <<  this->name <<"`s father unnown\n";
-		else {
-			std::cout << this->name << "`s father:\n";
-			father->print_g();
-		};
-	}
+	void print_g();
 
 };
