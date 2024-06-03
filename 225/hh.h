@@ -59,7 +59,10 @@ public:
 	human(const human&) =default; // конструктор копирования
 
 	static std::shared_ptr<human> child //создание реебенка
-	  (const std::string& name, sex in_sex, const std::shared_ptr<human>& mom, const std::shared_ptr<human>& dad);
+	  (const std::string& name,
+		  sex in_sex, 
+		  const std::shared_ptr<human>& mom, 
+		  const std::shared_ptr<human>& dad);
 
 	void is_dead() { alive = false; };// умер
 

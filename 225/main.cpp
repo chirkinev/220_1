@@ -192,7 +192,7 @@ int main()
 
 
 	__asm nop
-	}//закрытие файла???
+	}//закрытие файла??? как то само, при деструкторе shared_ptr
 
 	
 	/***************************************************************/
@@ -333,9 +333,9 @@ int main()
 	sptr_h mom=( human::child("Lilim", human::sex::female, g_mom2, g_dad2));
 
 	(*g_dad1).is_dead();// Адам переел фруктов
-	(*dad).is_dead();// Каин убил Авеля
+	dad->is_dead();// Каин убил Авеля
 
-	sptr_h doth = (human::child("Masha", human::sex::female, mom, dad)); // и внучку
+	sptr_h doth = (human::child("Masha", human::sex::female, mom, dad)); // и родили внучку
 
 	(*doth).print_g();
 	

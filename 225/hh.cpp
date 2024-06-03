@@ -37,8 +37,8 @@ std::shared_ptr<human> human::child(
 	const std::shared_ptr<human>& dad)
 {
 	std::shared_ptr<human> tmp=std::make_shared<human>(in_name, in_sex, true,mom,dad);
-	if ((*mom).h_sex == sex::female) (*mom).children.emplace_back(tmp);
-	if ((*dad).h_sex == sex::male) (*dad).children.emplace_back(tmp);
+	if (((*mom).h_sex == sex::female)&&mom) (*mom).children.emplace_back(tmp);
+	if (((*dad).h_sex == sex::male)&&dad) (*dad).children.emplace_back(tmp);
 	return tmp;
 }
 
