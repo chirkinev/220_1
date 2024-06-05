@@ -2,7 +2,7 @@
 
 //
 
-bool only_letter(std::string st)
+bool only_letter(const std::string& st)
 {
 	for (char a : st)
 		if (!((a >= 'a' && a <= 'z') || 
@@ -11,7 +11,7 @@ bool only_letter(std::string st)
 
 	return true;
 }
-bool only_digit(std::string st)
+bool only_digit(const std::string& st)
 {
 	for (char a : st)
 		if (!(a >= '0' && a <= '9'))
@@ -19,7 +19,7 @@ bool only_digit(std::string st)
 	return true;
 }
 
-bool no_let_no_digit(std::string st)
+bool no_let_no_digit(const std::string& st)
 {
 	for (char a : st)
 		if ((a >= 'a' && a <= 'z') || 
@@ -42,40 +42,41 @@ std::shared_ptr<human> human::child(
 	return tmp;
 }
 
-void human::print_h() {
-	if (h_sex == sex::male) std::cout << "Man ";
-	else std::cout << "Woman ";
+void human::print_h(const size_t& level) {
+	std::string l(level, ' ');
+	if (h_sex == sex::male) std::cout<< l << "Man ";
+	else std::cout << l << "Woman ";
 	std::cout << "\"" << name << "\", ";
 	if (alive)std::cout << "alive \n";
 	else std::cout << "dead \n";
 
 }
 
-void human::print_g()
+void human::print_g(const size_t& level)
 {
+	std::string l(level,' ');
+	this->print_h(level);
+	std::cout << l << "--------------\n";
 
-	this->print_h();
-	std::cout << "--------------\n";
-
-	if (children.size() == 0)std::cout << "no children\n";
+	if (children.size() == 0)std::cout << l << "no children\n";
 	else {
-		std::cout << this->name << "`s children:\n";
+		std::cout << l << this->name << "`s children:\n";
 		for (std::weak_ptr<human>& ch : children) {
 			auto chh = ch.lock();
-			chh->print_h();
+			chh->print_h(level);
 		}
 	};
-	std::cout << "--------------\n";
-	if ((this->mother) == nullptr)std::cout << this->name << "`s mother unnown\n";
+	std::cout << l<< l << "--------------\n";
+	if ((this->mother) == nullptr)std::cout << l << l << this->name << "`s mother unnown\n";
 	else {
-		std::cout << this->name << "`s mother:\n";
-		mother->print_g();
+		std::cout << l << l << this->name << "`s mother:\n";
+		mother->print_g(level+5);
 	};
-	std::cout << "--------------\n";
-	if ((this->father) == nullptr)std::cout << this->name << "`s father unnown\n";
+	std::cout << l<<l << "--------------\n";
+	if ((this->father) == nullptr)std::cout << l <<l<< this->name << "`s father unnown\n";
 	else {
-		std::cout << this->name << "`s father:\n";
-		father->print_g();
+		std::cout << l << l << this->name << "`s father:\n";
+		father->print_g(level+5);
 	};
 }
 

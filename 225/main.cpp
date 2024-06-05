@@ -226,6 +226,10 @@ int main()
 		for (auto it = v_sptr.cbegin(); it!=v_sptr.cend() ; ++it)
 			if (only_letter(**it))
 				set_s.insert(*it);
+
+		for (auto st: set_s)
+			std::cout << *st << " ; ";
+		std::cout << " \n";
 		
 		__asm nop
 		/******************************************************************************************/
@@ -335,7 +339,7 @@ int main()
 	(*g_dad1).is_dead();// Адам переел фруктов
 	dad->is_dead();// Каин убил Авеля
 
-	sptr_h doth = (human::child("Masha", human::sex::female, mom, dad)); // и родили внучку
+	sptr_h doth = (human::child("Masha", human::sex::female, mom, dad)); // и еще родили внучку
 
 	(*doth).print_g();
 	

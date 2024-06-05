@@ -21,11 +21,11 @@ public:
 
 };
 
-bool only_letter(std::string st);
-bool only_digit(std::string st);
-bool no_let_no_digit(std::string st);
+bool only_letter(const std::string& st);// объ€вление функций выборки из стринга
+bool only_digit(const std::string& st);
+bool no_let_no_digit(const std::string& st);
 
-class human {
+class human {  // класс человек
 	std::string name;
 	bool alive;
 public: enum class sex{male,female};
@@ -66,7 +66,7 @@ public:
 
 	void is_dead() { alive = false; };// умер
 
-	void print_h();
-	void print_g();
+	void print_h(const size_t& level = 0);
+	void print_g(const size_t& level = 0);
 
 };
